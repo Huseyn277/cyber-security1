@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kibertəhlükəsizlik Məlumatlandırma | ADNSU</title>
+    <meta name="description" content="Kibertəhlükəsizlik haqqında məlumatlandırma layihəsi - ADNSU">
+    <style>
+        :root {
+            --primary: #1a56db;
+            --primary-dark: #1e40af;
+            --danger: #dc2626;
+            --danger-bg: #fef2f2;
+            --success: #16a34a;
+            --success-bg: #f0fdf4;
+            --warning: #d97706;
+            --warning-bg: #fffbeb;
+            --info-bg: #eff6ff;
+            --bg: #f0f4f8;
+            --card: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 16px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* ─── NAV ─── */
+        nav {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 5%;
+            display: flex; align-items: center; justify-content: space-between;
+            height: 64px;
+        }
+        .logo { font-weight: 900; font-size: 18px; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+        .logo svg { width: 28px; height: 28px; }
+        .nav-links { display: flex; gap: 6px; }
+        .nav-links a {
+            text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 600;
+            padding: 8px 14px; border-radius: 8px; transition: all 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); background: var(--info-bg); }
+
+        /* ─── HERO ─── */
+        .hero {
+            text-align: center;
+            padding: 80px 5% 60px;
+            background: linear-gradient(135deg, #1e3a5f 0%, #1a56db 50%, #3b82f6 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .hero > * { position: relative; z-index: 1; }
+        .hero h1 { font-size: 42px; font-weight: 900; margin-bottom: 16px; }
+        .hero p { font-size: 18px; opacity: 0.9; max-width: 650px; margin: 0 auto 30px; }
+        .hero-badge {
+            display: inline-block; padding: 8px 18px; border-radius: 30px;
+            background: rgba(255,255,255,0.15); font-size: 13px; font-weight: 700;
+            letter-spacing: 1px; text-transform: uppercase;
+            margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* ─── SECTIONS ─── */
+        section { padding: 60px 5%; max-width: 1100px; margin: 0 auto; }
+        .section-title {
+            font-size: 30px; font-weight: 800; margin-bottom: 8px;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .section-title .icon {
+            width: 42px; height: 42px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; flex-shrink: 0;
+        }
+        .section-subtitle { color: var(--muted); font-size: 16px; margin-bottom: 35px; }
+
+        /* ─── CARDS ─── */
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            transition: box-shadow 0.2s;
+        }
+        .card:hover { box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
+        .card h3 { font-size: 18px; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+        .card p { color: var(--muted); font-size: 14px; line-height: 1.7; }
+
+        /* ─── FINGERPRINT SECTION ─── */
+        .fp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+        .fp-item {
+            background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+            padding: 20px; display: flex; align-items: flex-start; gap: 14px;
+        }
+        .fp-icon {
+            width: 44px; height: 44px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; flex-shrink: 0;
+        }
+        .fp-label { font-size: 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .fp-value { font-size: 15px; font-weight: 700; color: var(--text); margin-top: 4px; word-break: break-all; }
+
+        /* ─── PHISHING DEMO ─── */
+        .phish-demo {
+            background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 40px; text-align: center; margin-bottom: 30px;
+        }
+        .phish-demo .fake-form {
+            max-width: 380px; margin: 25px auto 0; text-align: left;
+        }
+        .phish-demo input {
+            width: 100%; padding: 13px 16px; border: 1px solid var(--border);
+            border-radius: 10px; font-size: 15px; margin-bottom: 12px;
+            outline: none; transition: border 0.2s;
+        }
+        .phish-demo input:focus { border-color: var(--primary); }
+        .phish-demo label { font-size: 13px; font-weight: 600; color: var(--muted); display: block; margin-bottom: 5px; }
+        .btn {
+            width: 100%; padding: 14px; border: none; border-radius: 10px;
+            font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s;
+        }
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-danger { background: var(--danger); color: #fff; }
+
+        /* ─── ALERT BOXES ─── */
+        .alert {
+            padding: 20px 24px; border-radius: 12px; margin: 20px 0;
+            display: flex; align-items: flex-start; gap: 12px; font-size: 14px; line-height: 1.7;
+        }
+        .alert-danger { background: var(--danger-bg); border: 1px solid #fecaca; color: #991b1b; }
+        .alert-success { background: var(--success-bg); border: 1px solid #bbf7d0; color: #166534; }
+        .alert-warning { background: var(--warning-bg); border: 1px solid #fde68a; color: #92400e; }
+        .alert-info { background: var(--info-bg); border: 1px solid #bfdbfe; color: #1e40af; }
+        .alert-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+
+        /* ─── THREAT CARDS ─── */
+        .threat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+        .threat-card {
+            background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 28px; position: relative; overflow: hidden;
+        }
+        .threat-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+        }
+        .threat-card.red::before { background: var(--danger); }
+        .threat-card.orange::before { background: var(--warning); }
+        .threat-card.blue::before { background: var(--primary); }
+        .threat-card h3 { font-size: 18px; margin-bottom: 10px; }
+        .threat-card p { color: var(--muted); font-size: 14px; line-height: 1.7; }
+        .threat-card ul { margin-top: 12px; padding-left: 20px; }
+        .threat-card li { color: var(--muted); font-size: 14px; margin-bottom: 6px; }
+
+        /* ─── TIPS ─── */
+        .tips-list { counter-reset: tip; }
+        .tip-item {
+            background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 24px 24px 24px 70px; margin-bottom: 14px; position: relative;
+        }
+        .tip-item::before {
+            counter-increment: tip;
+            content: counter(tip);
+            position: absolute; left: 20px; top: 22px;
+            width: 36px; height: 36px; border-radius: 10px;
+            background: var(--info-bg); color: var(--primary);
+            font-weight: 800; font-size: 16px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .tip-item h4 { font-size: 16px; margin-bottom: 6px; }
+        .tip-item p { color: var(--muted); font-size: 14px; }
+
+        /* ─── PROGRESS BAR ─── */
+        .progress-wrap { margin: 20px 0; }
+        .progress-bar { height: 8px; background: #e5e7eb; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 10px; transition: width 1.5s ease; }
+
+        /* ─── STATS ─── */
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 30px 0; }
+        .stat-card {
+            background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+            padding: 24px; text-align: center;
+        }
+        .stat-number { font-size: 36px; font-weight: 900; color: var(--primary); }
+        .stat-label { font-size: 13px; color: var(--muted); font-weight: 600; margin-top: 4px; }
+
+        /* ─── QUIZ ─── */
+        .quiz-card {
+            background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 30px; margin-bottom: 16px;
+        }
+        .quiz-card h4 { margin-bottom: 16px; font-size: 16px; }
+        .quiz-option {
+            display: block; width: 100%; text-align: left; padding: 14px 18px;
+            border: 2px solid var(--border); border-radius: 10px; background: #fff;
+            font-size: 14px; cursor: pointer; margin-bottom: 8px; transition: all 0.2s;
+            font-weight: 500;
+        }
+        .quiz-option:hover { border-color: var(--primary); background: var(--info-bg); }
+        .quiz-option.correct { border-color: var(--success); background: var(--success-bg); color: #166534; }
+        .quiz-option.wrong { border-color: var(--danger); background: var(--danger-bg); color: #991b1b; }
+        .quiz-result { display: none; margin-top: 12px; padding: 14px; border-radius: 10px; font-size: 14px; font-weight: 600; }
+
+        /* ─── FOOTER ─── */
+        footer {
+            text-align: center; padding: 40px 5%;
+            background: #1e293b; color: #94a3b8; font-size: 13px;
+        }
+        footer a { color: #60a5fa; text-decoration: none; }
+
+        /* ─── HIDDEN ─── */
+        .hidden { display: none !important; }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 28px; }
+            .nav-links { display: none; }
+            section { padding: 40px 4%; }
+            .fp-grid { grid-template-columns: 1fr; }
+            .threat-grid { grid-template-columns: 1fr; }
+            .stats { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* ─── ANIMATIONS ─── */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate { animation: fadeInUp 0.6s ease-out both; }
+
+        /* ─── SCAN ANIMATION ─── */
+        @keyframes scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .scanning .progress-fill {
+            animation: scan 1.5s ease-in-out infinite;
+            width: 60% !important;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════ NAV ═══════════ -->
+<nav>
+    <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        CyberGuard | ADNSU
+    </div>
+    <div class="nav-links">
+        <a href="#fingerprint" class="active">İz Analizi</a>
+        <a href="#phishing">Fişinq</a>
+        <a href="#threats">Təhdidlər</a>
+        <a href="#tips">Tövsiyələr</a>
+        <a href="#quiz">Quiz</a>
+    </div>
+</nav>
+
+<!-- ═══════════ HERO ═══════════ -->
+<div class="hero">
+    <div class="hero-badge">🔒 Təhsil Layihəsi</div>
+    <h1>Kibertəhlükəsizlik Məlumatlandırma</h1>
+    <p>Bu sayt sizə internet dünyasında hansı təhlükələrin mövcud olduğunu və özünüzü necə qoruya biləcəyinizi göstərir.</p>
+</div>
+
+<!-- ═══════════ SECTION 1: FINGERPRINT ═══════════ -->
+<section id="fingerprint">
+    <div class="section-title">
+        <span class="icon" style="background:#eff6ff;color:#1a56db;">🔍</span>
+        Bu Səhifə Sizin Haqqınızda Nə Bilir?
+    </div>
+    <p class="section-subtitle">Hər hansı bir saytı ziyarət edərkən brauzeriniz avtomatik olaraq çoxlu məlumat göndərir. Aşağıda sizin haqqınızda əldə edilən məlumatları görə bilərsiniz.</p>
+
+    <div class="progress-wrap scanning" id="scanProgress">
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+        <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:8px;">Məlumatlar toplanır...</p>
+    </div>
+
+    <div class="fp-grid hidden" id="fpGrid">
+        <!-- JS fills these -->
+    </div>
+
+    <div class="alert alert-warning hidden" id="fpWarning">
+        <span class="alert-icon">⚠️</span>
+        <div>
+            <strong>Diqqət!</strong> Yuxarıdakı məlumatların hamısı sadəcə bu səhifəni açmaqla əldə edildi.
+            Heç bir şəxsi məlumat daxil etmədiniz — amma sayt artıq sizi tanıya bilər.
+            Bu, <strong>brauzer izi (browser fingerprinting)</strong> adlanır.
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════ STATS ═══════════ -->
+<section style="padding-top:0;">
+    <div class="stats">
+        <div class="stat-card animate">
+            <div class="stat-number" id="statAttacks">0</div>
+            <div class="stat-label">Gündəlik kiberhücum sayı (dünyada)</div>
+        </div>
+        <div class="stat-card animate">
+            <div class="stat-number" id="statPhishing">0%</div>
+            <div class="stat-label">Hücumların fişinq payı</div>
+        </div>
+        <div class="stat-card animate">
+            <div class="stat-number" id="statCost">$0</div>
+            <div class="stat-label">Orta məlumat sızıntısı zərəri</div>
+        </div>
+        <div class="stat-card animate">
+            <div class="stat-number" id="statTime">0 gün</div>
+            <div class="stat-label">Sızıntının aşkar edilmə müddəti</div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════ SECTION 2: PHISHING DEMO ═══════════ -->
+<section id="phishing">
+    <div class="section-title">
+        <span class="icon" style="background:#fef2f2;color:#dc2626;">🎣</span>
+        Fişinq (Phishing) Nədir?
+    </div>
+    <p class="section-subtitle">Fişinq — hücumçunun etibarlı bir təşkilat kimi görünərək sizin şəxsi məlumatlarınızı oğurlamağa çalışmasıdır.</p>
+
+    <div class="phish-demo" id="phishDemo">
+        <div id="phishForm">
+            <div style="display:inline-block;padding:6px 14px;border-radius:20px;background:#fff4d6;color:#8a5a00;font-size:12px;font-weight:700;">⚡ Demo — Nümunə Saxta Səhifə</div>
+            <h2 style="margin:18px 0 6px;font-size:24px;">🏛️ ADNSU Tələbə Portalı</h2>
+            <p style="color:var(--muted);font-size:14px;">Balaların imtahan nəticələrini görmək üçün daxil olun</p>
+            <div class="fake-form">
+                <label>📧 E-poçt ünvanı</label>
+                <input type="email" placeholder="student@adnsu.edu.az" id="fakeEmail">
+                <label>🔑 Şifrə</label>
+                <input type="password" placeholder="Şifrənizi daxil edin" id="fakePass">
+                <button class="btn btn-primary" onclick="showPhishReveal()">Daxil ol</button>
+            </div>
+        </div>
+        <div id="phishReveal" class="hidden">
+            <div style="font-size:60px;margin-bottom:15px;">🚨</div>
+            <h2 style="color:var(--danger);margin-bottom:10px;">DAYANIN! Bu saxta səhifə idi!</h2>
+            <p style="color:var(--muted);max-width:500px;margin:0 auto 20px;font-size:15px;">
+                Əgər bu real hücum olsaydı, daxil etdiyiniz məlumatlar artıq hücumçunun əlində olardı.
+            </p>
+            <div class="alert alert-danger" style="text-align:left;">
+                <span class="alert-icon">🔓</span>
+                <div>
+                    <strong>Siz bunları daxil etdiniz:</strong><br>
+                    E-poçt: <strong id="revealEmail"></strong><br>
+                    Şifrə: <strong id="revealPass"></strong><br><br>
+                    <em>Narahat olmayın — bu demo-dur, heç bir məlumat saxlanılmır və ya göndərilmir!</em>
+                </div>
+            </div>
+            <div class="alert alert-success" style="text-align:left;">
+                <span class="alert-icon">✅</span>
+                <div>
+                    <strong>Fişinqi necə tanımaq olar:</strong><br>
+                    • URL-i yoxlayın — rəsmi domen olmalıdır<br>
+                    • HTTPS kilidini axtarın<br>
+                    • Qrammatik səhvlərə diqqət edin<br>
+                    • Təcili hərəkət tələb edən mesajlardan şübhələnin<br>
+                    • Heç vaxt linkə klikləməklə giriş etməyin — URL-i özünüz yazın
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="resetPhish()" style="max-width:300px;margin:10px auto 0;">🔄 Yenidən sına</button>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════ SECTION 3: THREATS ═══════════ -->
+<section id="threats">
+    <div class="section-title">
+        <span class="icon" style="background:#fef3c7;color:#d97706;">⚡</span>
+        Əsas Kibertəhdidlər
+    </div>
+    <p class="section-subtitle">İnternetdə ən çox rast gəlinən təhlükə növləri və onlardan qorunma yolları.</p>
+
+    <div class="threat-grid">
+        <div class="threat-card red">
+            <h3>🦠 Zərərli Proqramlar (Malware)</h3>
+            <p>Kompüterinizə zərər vermək və ya məlumatlarınızı oğurlamaq üçün hazırlanmış proqramlar.</p>
+            <ul>
+                <li><strong>Virus</strong> — özünü digər fayllara yayan zərərli kod</li>
+                <li><strong>Troyan</strong> — faydalı proqram kimi görünən zərərli proqram</li>
+                <li><strong>Ransomware</strong> — fayllarınızı şifrələyib fidyə tələb edir</li>
+                <li><strong>Spyware</strong> — gizli şəkildə sizi izləyən proqram</li>
+            </ul>
+        </div>
+        <div class="threat-card orange">
+            <h3>🔓 Sosial Mühəndislik</h3>
+            <p>İnsanları aldadaraq məxfi məlumatları əldə etmə üsulları.</p>
+            <ul>
+                <li><strong>Fişinq</strong> — saxta e-poçt/saytlarla aldatma</li>
+                <li><strong>Pretexting</strong> — yalan hekayə ilə etibar qazanma</li>
+                <li><strong>Baiting</strong> — yoluxmuş USB/fayl tələsi</li>
+                <li><strong>Tailgating</strong> — fiziki təhlükəsizliyi keçmə</li>
+            </ul>
+        </div>
+        <div class="threat-card blue">
+            <h3>🌐 Şəbəkə Hücumları</h3>
+            <p>Şəbəkə zəifliklərindən istifadə edərək həyata keçirilən hücumlar.</p>
+            <ul>
+                <li><strong>MITM</strong> — iki tərəf arasında danışığı dinləmə</li>
+                <li><strong>DDoS</strong> — serveri sıradan çıxarma hücumu</li>
+                <li><strong>SQL Injection</strong> — verilənlər bazasına müdaxilə</li>
+                <li><strong>XSS</strong> — sayta zərərli skript yerləşdirmə</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════ SECTION 4: PASSWORD CHECK ═══════════ -->
+<section id="password-check">
+    <div class="section-title">
+        <span class="icon" style="background:#f0fdf4;color:#16a34a;">🔐</span>
+        Şifrəniz Nə Qədər Etibarlıdır?
+    </div>
+    <p class="section-subtitle">Şifrənizin gücünü yoxlayın. Heç bir məlumat saxlanılmır və ya göndərilmir — bütün yoxlama brauzerinizdə aparılır.</p>
+
+    <div class="card">
+        <div style="max-width:500px;">
+            <label style="font-size:13px;font-weight:600;color:var(--muted);display:block;margin-bottom:6px;">Test üçün şifrə daxil edin:</label>
+            <div style="position:relative;">
+                <input type="password" id="passCheck" placeholder="Şifrənizi daxil edin..."
+                    style="width:100%;padding:14px 50px 14px 16px;border:2px solid var(--border);border-radius:10px;font-size:16px;outline:none;"
+                    oninput="checkPassword(this.value)">
+                <button onclick="togglePassVis()" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:18px;" id="passToggle">👁️</button>
+            </div>
+            <div class="progress-wrap" style="margin-top:14px;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="passBar" style="width:0%;background:#e5e7eb;"></div>
+                </div>
+            </div>
+            <p id="passResult" style="font-size:14px;font-weight:600;color:var(--muted);margin-top:6px;">Şifrə daxil edin</p>
+            <div id="passTips" style="margin-top:14px;font-size:13px;color:var(--muted);"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════ SECTION 5: TIPS ═══════════ -->
+<section id="tips">
+    <div class="section-title">
+        <span class="icon" style="background:#f0fdf4;color:#16a34a;">💡</span>
+        Təhlükəsizlik Tövsiyələri
+    </div>
+    <p class="section-subtitle">Onlayn təhlükəsizliyinizi artırmaq üçün 10 vacib tövsiyə.</p>
+
+    <div class="tips-list">
+        <div class="tip-item">
+            <h4>Güclü və Unikal Şifrələr İstifadə Edin</h4>
+            <p>Hər hesab üçün fərqli, minimum 12 simvol uzunluğunda, böyük/kiçik hərf, rəqəm və xüsusi simvollardan ibarət şifrə yaradın.</p>
+        </div>
+        <div class="tip-item">
+            <h4>İki Faktorlu Autentifikasiya (2FA) Aktivləşdirin</h4>
+            <p>SMS, autentifikasiya tətbiqi və ya açar vasitəsilə əlavə qorunma təmin edin. Şifrə oğurlansa belə, hesabınız qorunur.</p>
+        </div>
+        <div class="tip-item">
+            <h4>Proqramları Həmişə Yeniləyin</h4>
+            <p>Əməliyyat sistemi, brauzer və tətbiqləri vaxtında yeniləyin. Yeniləmələr təhlükəsizlik boşluqlarını bağlayır.</p>
+        </div>
+        <div class="tip-item">
+            <h4>Şübhəli Linklərə Klikləməyin</h4>
+            <p>Naməlum göndəricilərdən gələn e-poçt, SMS və ya mesajlardakı linklərə ehtiyatla yanaşın. URL-i əvvəlcə yoxlayın.</p>
+        </div>
+        <div class="tip-item">
+            <h4>İctimai Wi-Fi-dan Ehtiyatlı İstifadə Edin</h4>
+            <p>Açıq Wi-Fi şəbəkələrində bank əməliyyatları və ya şəxsi hesablara giriş etməyin. VPN istifadə edin.</p>
+        </div>
+        <div class="tip-item">
+            <h4>Ehtiyat Nüsxə Çıxarın</h4>
+            <p>Vacib fayllarınızı müntəzəm olaraq xarici diskə və ya bulud xidmətinə yedəkləyin. Ransomware hücumundan qorunun.</p>
+        </div>
+        <div class="tip-item">
+            <h4>Sosial Mediada Ehtiyatlı Olun</h4>
+            <p>Şəxsi məlumatlarınızı (doğum tarixi, ünvan, telefon) paylaşmayın. Gizlilik parametrlərini yoxlayın.</p>
+        </div>
+        <div class="tip-item">
+            <h4>Antivirus Proqramı İstifadə Edin</h4>
+            <p>Etibarlı antivirus proqramı quraşdırın və viruslar bazasını vaxtında yeniləyin. Müntəzəm skan aparın.</p>
+        </div>
+        <div class="tip-item">
+            <h4>HTTPS Olub-Olmadığını Yoxlayın</h4>
+            <p>Saytlara məlumat daxil etməzdən əvvəl URL-in "https://" ilə başladığından və kilid işarəsinin olduğundan əmin olun.</p>
+        </div>
+        <div class="tip-item">
+            <h4>Şifrə Meneceri İstifadə Edin</h4>
+            <p>Bitwarden, KeePass və ya 1Password kimi alətlər şifrələrinizi təhlükəsiz saxlayır və güclü şifrələr yaradır.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════ SECTION 6: QUIZ ═══════════ -->
+<section id="quiz">
+    <div class="section-title">
+        <span class="icon" style="background:#fae8ff;color:#a855f7;">🧠</span>
+        Biliyinizi Yoxlayın
+    </div>
+    <p class="section-subtitle">Kibertəhlükəsizlik haqqında biliyinizi sınayın!</p>
+
+    <div id="quizContainer"></div>
+
+    <div class="card hidden" id="quizScore" style="text-align:center;padding:40px;">
+        <div style="font-size:50px;margin-bottom:10px;" id="quizEmoji">🎉</div>
+        <h2 id="quizScoreText"></h2>
+        <p style="color:var(--muted);margin-top:8px;" id="quizScoreDesc"></p>
+        <button class="btn btn-primary" onclick="resetQuiz()" style="max-width:250px;margin:20px auto 0;">🔄 Yenidən başla</button>
+    </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+    <p>🔒 Kibertəhlükəsizlik Məlumatlandırma Layihəsi | ADNSU © 2026</p>
+    <p style="margin-top:8px;">Bu sayt yalnız təhsil məqsədli hazırlanmışdır. Heç bir şəxsi məlumat toplanmır və ya saxlanılmır.</p>
+</footer>
+
+<script>
+// ══════════════════════════════════════════
+// 1. BROWSER FINGERPRINT
+// ══════════════════════════════════════════
+function collectFingerprint() {
+    const fp = [];
+
+    // Browser
+    fp.push({ icon: '🌐', label: 'Brauzer', value: detectBrowser(), bg: '#eff6ff' });
+
+    // OS
+    fp.push({ icon: '💻', label: 'Əməliyyat Sistemi', value: detectOS(), bg: '#f0fdf4' });
+
+    // Screen
+    fp.push({ icon: '🖥️', label: 'Ekran Ölçüsü', value: `${screen.width} × ${screen.height} (${window.devicePixelRatio}x piksel sıxlığı)`, bg: '#fef3c7' });
+
+    // Language
+    fp.push({ icon: '🗣️', label: 'Dil', value: navigator.language || navigator.userLanguage || 'Naməlum', bg: '#fae8ff' });
+
+    // Timezone
+    fp.push({ icon: '🕐', label: 'Saat Qurşağı', value: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Naməlum', bg: '#fef2f2' });
+
+    // Platform
+    fp.push({ icon: '⚙️', label: 'Platforma', value: navigator.platform || 'Naməlum', bg: '#f0f9ff' });
+
+    // Cores
+    fp.push({ icon: '🧮', label: 'CPU Nüvə Sayı', value: navigator.hardwareConcurrency || 'Naməlum', bg: '#fff7ed' });
+
+    // Memory
+    fp.push({ icon: '📊', label: 'Yaddaş (RAM)', value: navigator.deviceMemory ? navigator.deviceMemory + ' GB' : 'Müəyyən edilmir', bg: '#fdf4ff' });
+
+    // Connection
+    const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (conn) {
+        fp.push({ icon: '📶', label: 'Bağlantı Tipi', value: `${conn.effectiveType || '?'} (${conn.downlink || '?'} Mbps)`, bg: '#ecfdf5' });
+    }
+
+    // Touch
+    fp.push({ icon: '👆', label: 'Toxunma Dəstəyi', value: navigator.maxTouchPoints > 0 ? `Bəli (${navigator.maxTouchPoints} nöqtə)` : 'Xeyr', bg: '#fff1f2' });
+
+    // Cookies
+    fp.push({ icon: '🍪', label: 'Kukilər (Cookies)', value: navigator.cookieEnabled ? 'Aktivdir' : 'Deaktivdir', bg: '#fffbeb' });
+
+    // Do Not Track
+    fp.push({ icon: '🛡️', label: 'Do Not Track', value: navigator.doNotTrack === '1' ? 'Aktivdir' : 'Deaktivdir', bg: '#f0fdf4' });
+
+    return fp;
+}
+
+function detectBrowser() {
+    const ua = navigator.userAgent;
+    if (ua.includes('Edg/')) return 'Microsoft Edge';
+    if (ua.includes('OPR/') || ua.includes('Opera')) return 'Opera';
+    if (ua.includes('Chrome')) return 'Google Chrome';
+    if (ua.includes('Firefox')) return 'Mozilla Firefox';
+    if (ua.includes('Safari')) return 'Safari';
+    return 'Naməlum';
+}
+
+function detectOS() {
+    const ua = navigator.userAgent;
+    if (ua.includes('Windows NT 10')) return 'Windows 10/11';
+    if (ua.includes('Windows')) return 'Windows';
+    if (ua.includes('Mac OS X')) return 'macOS';
+    if (ua.includes('Android')) return 'Android';
+    if (ua.includes('iOS') || ua.includes('iPhone')) return 'iOS';
+    if (ua.includes('Linux')) return 'Linux';
+    return 'Naməlum';
+}
+
+function renderFingerprint() {
+    const grid = document.getElementById('fpGrid');
+    const data = collectFingerprint();
+    grid.innerHTML = data.map(d => `
+        <div class="fp-item animate">
+            <div class="fp-icon" style="background:${d.bg}">${d.icon}</div>
+            <div>
+                <div class="fp-label">${d.label}</div>
+                <div class="fp-value">${d.value}</div>
+            </div>
+        </div>
+    `).join('');
+
+    // Also fetch IP info
+    fetchIPInfo(grid);
+}
+
+async function fetchIPInfo(grid) {
+    try {
+        const res = await fetch('https://ipapi.co/json/');
+        const data = await res.json();
+        const items = [
+            { icon: '🌍', label: 'IP Ünvanı', value: data.ip || 'Naməlum', bg: '#fef2f2' },
+            { icon: '📍', label: 'Təxmini Yer', value: `${data.city || '?'}, ${data.region || '?'}, ${data.country_name || '?'}`, bg: '#eff6ff' },
+            { icon: '🏢', label: 'İnternet Provayderi', value: data.org || 'Naməlum', bg: '#f0fdf4' },
+        ];
+        grid.innerHTML += items.map(d => `
+            <div class="fp-item animate">
+                <div class="fp-icon" style="background:${d.bg}">${d.icon}</div>
+                <div>
+                    <div class="fp-label">${d.label}</div>
+                    <div class="fp-value">${d.value}</div>
+                </div>
+            </div>
+        `).join('');
+    } catch(e) {
+        // IP API unavailable
+    }
+}
+
+// Animate the scan
+setTimeout(() => {
+    document.getElementById('scanProgress').classList.add('hidden');
+    document.getElementById('fpGrid').classList.remove('hidden');
+    document.getElementById('fpWarning').classList.remove('hidden');
+    renderFingerprint();
+}, 2500);
+
+
+// ══════════════════════════════════════════
+// 2. PHISHING DEMO
+// ══════════════════════════════════════════
+function showPhishReveal() {
+    const email = document.getElementById('fakeEmail').value || '(boş)';
+    const pass = document.getElementById('fakePass').value || '(boş)';
+    document.getElementById('revealEmail').textContent = email;
+    document.getElementById('revealPass').textContent = pass;
+    document.getElementById('phishForm').classList.add('hidden');
+    document.getElementById('phishReveal').classList.remove('hidden');
+}
+
+function resetPhish() {
+    document.getElementById('fakeEmail').value = '';
+    document.getElementById('fakePass').value = '';
+    document.getElementById('phishForm').classList.remove('hidden');
+    document.getElementById('phishReveal').classList.add('hidden');
+}
+
+
+// ══════════════════════════════════════════
+// 3. ANIMATED STATS
+// ══════════════════════════════════════════
+function animateCounter(el, target, prefix = '', suffix = '') {
+    let current = 0;
+    const step = target / 60;
+    const timer = setInterval(() => {
+        current += step;
+        if (current >= target) { current = target; clearInterval(timer); }
+        el.textContent = prefix + Math.floor(current).toLocaleString() + suffix;
+    }, 25);
+}
+
+const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            animateCounter(document.getElementById('statAttacks'), 2200, '', '');
+            animateCounter(document.getElementById('statPhishing'), 36, '', '%');
+            animateCounter(document.getElementById('statCost'), 4450000, '$', '');
+            animateCounter(document.getElementById('statTime'), 204, '', ' gün');
+            statsObserver.disconnect();
+        }
+    });
+}, { threshold: 0.3 });
+statsObserver.observe(document.querySelector('.stats'));
+
+
+// ══════════════════════════════════════════
+// 4. PASSWORD STRENGTH
+// ══════════════════════════════════════════
+function checkPassword(val) {
+    const bar = document.getElementById('passBar');
+    const result = document.getElementById('passResult');
+    const tips = document.getElementById('passTips');
+
+    if (!val) {
+        bar.style.width = '0%'; bar.style.background = '#e5e7eb';
+        result.textContent = 'Şifrə daxil edin'; result.style.color = 'var(--muted)';
+        tips.innerHTML = ''; return;
+    }
+
+    let score = 0;
+    const checks = [];
+
+    if (val.length >= 8) score += 20; else checks.push('❌ Minimum 8 simvol');
+    if (val.length >= 12) score += 10;
+    if (/[a-z]/.test(val)) score += 15; else checks.push('❌ Kiçik hərf əlavə edin');
+    if (/[A-Z]/.test(val)) score += 15; else checks.push('❌ Böyük hərf əlavə edin');
+    if (/[0-9]/.test(val)) score += 15; else checks.push('❌ Rəqəm əlavə edin');
+    if (/[^a-zA-Z0-9]/.test(val)) score += 15; else checks.push('❌ Xüsusi simvol əlavə edin (!@#$)');
+    if (val.length >= 16) score += 10;
+    if (/(.)\1{2,}/.test(val)) { score -= 10; checks.push('❌ Təkrarlanan simvollar var'); }
+    if (/^(123|abc|qwerty|password|12345)/i.test(val)) { score -= 20; checks.push('❌ Çox sadə nümunə'); }
+
+    score = Math.max(0, Math.min(100, score));
+
+    let color, text;
+    if (score < 30) { color = '#dc2626'; text = '🔴 Çox zəif'; }
+    else if (score < 50) { color = '#f97316'; text = '🟠 Zəif'; }
+    else if (score < 70) { color = '#eab308'; text = '🟡 Orta'; }
+    else if (score < 90) { color = '#22c55e'; text = '🟢 Güclü'; }
+    else { color = '#16a34a'; text = '🟢 Çox güclü!'; }
+
+    bar.style.width = score + '%';
+    bar.style.background = color;
+    result.textContent = text + ` (${score}%)`;
+    result.style.color = color;
+    tips.innerHTML = checks.length ? checks.join('<br>') : '✅ Əla! Bütün tələblər ödənilir.';
+}
+
+function togglePassVis() {
+    const inp = document.getElementById('passCheck');
+    const btn = document.getElementById('passToggle');
+    if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
+    else { inp.type = 'password'; btn.textContent = '👁️'; }
+}
+
+
+// ══════════════════════════════════════════
+// 5. QUIZ
+// ══════════════════════════════════════════
+const quizData = [
+    {
+        q: 'Fişinq hücumunun əsas məqsədi nədir?',
+        opts: ['Kompüterinizi sürətləndirmək', 'Şəxsi məlumatlarınızı oğurlamaq', 'Saytınızı yeniləmək', 'İnternet sürətini artırmaq'],
+        correct: 1
+    },
+    {
+        q: 'Güclü şifrədə aşağıdakılardan hansı olmalıdır?',
+        opts: ['Yalnız rəqəmlər', 'Doğum tarixi', 'Böyük/kiçik hərflər, rəqəmlər və simvollar', 'Yalnız adınız'],
+        correct: 2
+    },
+    {
+        q: 'HTTPS-dəki "S" nəyi ifadə edir?',
+        opts: ['Speed (sürət)', 'Secure (təhlükəsiz)', 'Smart (ağıllı)', 'Simple (sadə)'],
+        correct: 1
+    },
+    {
+        q: 'Hansı halda ictimai Wi-Fi istifadə etmək təhlükəlidir?',
+        opts: ['YouTube videoya baxmaq', 'Bank hesabına daxil olmaq', 'Hava proqnozuna baxmaq', 'Xəbərləri oxumaq'],
+        correct: 1
+    },
+    {
+        q: 'Ransomware nə edir?',
+        opts: ['Virusları silir', 'Fayllarınızı şifrələyib fidyə tələb edir', 'İnternet sürətini artırır', 'Reklamları blok edir'],
+        correct: 1
+    },
+    {
+        q: '2FA (İki Faktorlu Autentifikasiya) nəyə xidmət edir?',
+        opts: ['İnternet sürətini iki dəfə artırır', 'Hesab girişinə əlavə qorunma əlavə edir', 'İki şifrə yaradır', 'İki brauzer açır'],
+        correct: 1
+    }
+];
+
+let quizAnswered = 0;
+let quizCorrect = 0;
+
+function renderQuiz() {
+    const container = document.getElementById('quizContainer');
+    container.innerHTML = quizData.map((q, i) => `
+        <div class="quiz-card" id="quiz-${i}">
+            <h4>${i + 1}. ${q.q}</h4>
+            ${q.opts.map((opt, j) => `
+                <button class="quiz-option" onclick="answerQuiz(${i}, ${j})" id="q${i}o${j}">${opt}</button>
+            `).join('')}
+            <div class="quiz-result" id="qr-${i}"></div>
+        </div>
+    `).join('');
+}
+
+function answerQuiz(qIdx, oIdx) {
+    const q = quizData[qIdx];
+    const card = document.getElementById(`quiz-${qIdx}`);
+    const result = document.getElementById(`qr-${qIdx}`);
+
+    // Disable all options
+    q.opts.forEach((_, j) => {
+        const btn = document.getElementById(`q${qIdx}o${j}`);
+        btn.disabled = true;
+        btn.style.cursor = 'default';
+    });
+
+    // Highlight correct/wrong
+    document.getElementById(`q${qIdx}o${q.correct}`).classList.add('correct');
+    if (oIdx !== q.correct) {
+        document.getElementById(`q${qIdx}o${oIdx}`).classList.add('wrong');
+        result.style.background = 'var(--danger-bg)'; result.style.color = '#991b1b';
+        result.textContent = '❌ Səhv cavab!';
+    } else {
+        quizCorrect++;
+        result.style.background = 'var(--success-bg)'; result.style.color = '#166534';
+        result.textContent = '✅ Doğru cavab!';
+    }
+    result.style.display = 'block';
+
+    quizAnswered++;
+    if (quizAnswered === quizData.length) {
+        setTimeout(showQuizScore, 800);
+    }
+}
+
+function showQuizScore() {
+    const el = document.getElementById('quizScore');
+    const pct = Math.round((quizCorrect / quizData.length) * 100);
+    document.getElementById('quizScoreText').textContent = `Nəticəniz: ${quizCorrect}/${quizData.length} (${pct}%)`;
+
+    let emoji, desc;
+    if (pct === 100) { emoji = '🏆'; desc = 'Mükəmməl! Kibertəhlükəsizlik mütəxəssisisiniz!'; }
+    else if (pct >= 70) { emoji = '🎉'; desc = 'Əla nəticə! Əsas bilikləriniz güclüdür.'; }
+    else if (pct >= 50) { emoji = '📚'; desc = 'Pis deyil, amma daha çox öyrənməlisiniz.'; }
+    else { emoji = '⚠️'; desc = 'Kibertəhlükəsizlik haqqında daha çox oxumağınız tövsiyə olunur!'; }
+
+    document.getElementById('quizEmoji').textContent = emoji;
+    document.getElementById('quizScoreDesc').textContent = desc;
+    el.classList.remove('hidden');
+}
+
+function resetQuiz() {
+    quizAnswered = 0; quizCorrect = 0;
+    document.getElementById('quizScore').classList.add('hidden');
+    renderQuiz();
+}
+
+renderQuiz();
+
+
+// ══════════════════════════════════════════
+// NAV ACTIVE STATE
+// ══════════════════════════════════════════
+const navLinks = document.querySelectorAll('.nav-links a');
+const sections = document.querySelectorAll('section[id]');
+
+window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 100) current = s.getAttribute('id');
+    });
+    navLinks.forEach(a => {
+        a.classList.remove('active');
+        if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+    });
+});
+</script>
+
+</body>
+</html>
